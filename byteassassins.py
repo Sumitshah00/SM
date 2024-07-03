@@ -1,7 +1,7 @@
 import os
 from pytube import YouTube, Playlist
 import instaloader
-import snscrape.modules.twitter as sntwitter
+#import snscrape.modules.twitter as sntwitter
 import requests
 from rich.console import Console
 from rich.panel import Panel

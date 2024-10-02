@@ -1,7 +1,7 @@
+#owner @Byteassassins
 import os
 from pytube import YouTube, Playlist
 import instaloader
-import snscrape.modules.twitter as sntwitter
 import requests
 from rich.console import Console
 from rich.panel import Panel
@@ -38,18 +38,6 @@ def download_instagram_post(url, download_path='./'):
     loader.download_post(post, target=download_path)
     print(f"Downloaded Instagram post: {post.title}")
 
-def download_twitter_video(url, download_path='./'):
-    for tweet in sntwitter.TwitterTweetScraper(url.split('/')[-1]).get_items():
-        if tweet.media:
-            for media in tweet.media:
-                if media.type == 'video':
-                    video_url = media.variants[0].url
-                    video_data = requests.get(video_url).content
-                    with open(os.path.join(download_path, f"{tweet.id}.mp4"), 'wb') as f:
-                        f.write(video_data)
-                    print(f"Downloaded Twitter video: {tweet.id}")
-                    return
-
 def print_banner():
     banner_text = """
 [red]</dev> BYTEASSASSINS </dev>[/red]
@@ -70,9 +58,8 @@ def main():
     print("Welcome! Please select the platform:")
     print("1. Instagram")
     print("2. YouTube")
-    print("3. Twitter")
 
-    platform_choice = input("Please select which you want to download (1/2/3): ")
+    platform_choice = input("Please select which you want to download (1/2): ")
 
     if platform_choice == '1':
         url = input("Please enter the Instagram video URL: ")
@@ -95,9 +82,6 @@ def main():
             download_youtube_playlist(url)
         else:
             print("Invalid choice!")
-    elif platform_choice == '3':
-        url = input("Please enter the Twitter video URL: ")
-        download_twitter_video(url)
     else:
         print("Invalid choice!")
 
